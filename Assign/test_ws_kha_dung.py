@@ -1,11 +1,23 @@
 import re
 from playwright.sync_api import Page, expect
 
-class TestDownloadChuaLogin:
-    def test_download_more_option(self, page: Page) -> None:
-        page.goto("https://worksheetzone.org/worksheets", wait_until="networkidle")
-        page.locator("#dropdown-trigger-650914a3efe5de5722941721").get_by_role("button").click()
-        page.locator("div").filter(has_text=re.compile(r"^Download worksheet$")).nth(3).click()
-        page.get_by_text("Log in to your account").click()
-        popup_login = page.locator(self.popup_login_selector)
-        expect(popup_login).to_be_visible()
+class TestWSkhadung:
+    button_assign = "Assign"
+
+    # def test_ws_PDF(self, page: Page) -> None:
+    #     page.goto("https://worksheetzone.org/6588f117e0c742310abfe02f")
+    #     page.locator("div").filter(has_text=re.compile(r"^Share$")).click()
+    #     button_assign = page.get_by_text(self.button_assign, exact=True)
+    #     expect(button_assign).to_be_disabled()
+
+    # def test_ws_PDF_Quiz(self, page: Page) -> None:
+    #     page.goto("https://worksheetzone.org/6589048ce0c742310ac00797")
+    #     page.locator("div").filter(has_text=re.compile(r"^Share$")).click()
+    #     button_assign = page.get_by_text(self.button_assign, exact=True)
+    #     expect(button_assign).to_be_enabled()
+
+    def test_ws_Quiz(self, page: Page) -> None:
+        page.goto("https://worksheetzone.org/66068fa6b2412460610a4b10")
+        page.locator("div").filter(has_text=re.compile(r"^Share$")).click()
+        button_assign = page.get_by_text(self.button_assign, exact=True)
+        expect(button_assign).to_be_enabled()
