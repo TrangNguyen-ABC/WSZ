@@ -1,6 +1,6 @@
 import re
 from playwright.sync_api import Page, expect
-from playwright_stealth import stealth_async
+# from playwright_stealth import stealth_async
 
 class TestDownloadChuaLogin:
     popup_login_selector = ".main-login-container"
