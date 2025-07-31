@@ -1,0 +1,69 @@
+import re
+import os
+from playwright.sync_api import Page, expect, Browser
+
+AUTH_FILE_PATH_1 = "state_1.json"
+AUTH_FILE_PATH_2 = "state_2.json"
+
+# def test_hien_thi_popup_co_teacher(browser: Browser) -> None:
+    
+#     try:
+#         context = browser.new_context(storage_state=AUTH_FILE_PATH_1)
+#     except FileNotFoundError:
+#         print(f"LỖI: Không tìm thấy file state '{AUTH_FILE_PATH_1}'.")
+#         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
+#         assert False, f"File not found: {AUTH_FILE_PATH_1}"
+        
+#     # Tạo một trang mới từ context đã có trạng thái đăng nhập
+#     page = context.new_page()
+#     page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
+#     page.get_by_text("Assign").click() #click button Assign
+#     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
+#     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
+#     create_button = page.get_by_text("Create New", exact=True)
+#     try:
+#         expect(create_button).to_be_visible(timeout=3000)
+#         print("phát hiện popup worksheet in progress")
+#         create_button.click()
+#     except AssertionError:
+#         print("Không có popup 'Worksheet in progress'")
+#         pass
+#     #click add coteacher
+#     page.locator("#content-left-container").get_by_text("Add Co-Teacher").click()
+#     popup_add_co_teacher = page.get_by_role("dialog").locator("div").filter(has_text="Add Co-Teacher").nth(1)
+#     expect(popup_add_co_teacher).to_be_visible()
+
+def test_hien_thi_setting_mac_dinh_co_teacher(browser: Browser) -> None:
+    
+    try:
+        context = browser.new_context(storage_state=AUTH_FILE_PATH_1)
+    except FileNotFoundError:
+        print(f"LỖI: Không tìm thấy file state '{AUTH_FILE_PATH_1}'.")
+        print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
+        assert False, f"File not found: {AUTH_FILE_PATH_1}"
+        
+    # Tạo một trang mới từ context đã có trạng thái đăng nhập
+    page = context.new_page()
+    page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
+    page.get_by_text("Assign").click() #click button Assign
+    page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
+    print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
+    create_button = page.get_by_text("Create New", exact=True)
+    try:
+        expect(create_button).to_be_visible(timeout=3000)
+        print("phát hiện popup worksheet in progress")
+        create_button.click()
+    except AssertionError:
+        print("Không có popup 'Worksheet in progress'")
+        pass
+    #click add coteacher
+    page.locator("#content-left-container").get_by_text("Add Co-Teacher").click()
+    page.locator(".btn-set").first.click()
+    switch_end_assign = page.get_by_role("checkbox").first
+    expect(switch_end_assign).not_to_be_checked()
+    switch_change_setting = page.get_by_role("checkbox").nth(1)
+    expect(switch_change_setting).not_to_be_checked()
+    switch_comment = page.get_by_role("checkbox").nth(2)
+    expect(switch_comment).to_be_checked()
+    switch_edit_question = page.get_by_role("checkbox").nth(3)
+    expect(switch_edit_question).not_to_be_checked()
