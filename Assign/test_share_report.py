@@ -56,7 +56,7 @@ def test_paste_link_report_user_login_tk_khac (browser: Browser) -> None:
     button_request = page.get_by_text("Request Access", exact=True)
     expect(button_request).to_be_visible()
 
-def test_hien_thi_popup_share_assign(browser: Browser) -> None:
+def test_add_mail_user_duoc_share(browser: Browser) -> None:
     print(f"1. Đang nạp trạng thái đăng nhập từ: {AUTH_FILE_PATH_PRO_1}")
     # 4. Tạo một context mới và nạp trạng thái từ file auth.json
     try:
@@ -133,4 +133,4 @@ def test_hien_thi_assign_user_duoc_share(browser: Browser) -> None:
     page = context_2.new_page()    
     page.goto(clipboard_content, wait_until="load")
     button_request = page.get_by_text("Request Access", exact=True)
-    expect(button_request).to_be_enabled()
+    expect(button_request).to_be_hidden()

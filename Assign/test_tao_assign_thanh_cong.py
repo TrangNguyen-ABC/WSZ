@@ -218,7 +218,7 @@ def test_create_assign_success_from_landing_teaching_non_quiz(browser: Browser) 
     assert "/assign?code=" in page.url
     context.close()
 
-#Check tạo assign từ tool 
+# Check tạo assign từ tool 
 def test_create_assign_success_from_tool(browser: Browser) -> None:
     """
     Test này kiểm tra tạo assign thành công từ tool

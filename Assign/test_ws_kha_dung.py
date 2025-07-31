@@ -5,10 +5,6 @@ class TestWSKhaDung:
     button_assign_popup_share = "Assign"
 
     def test_ws_PDF(self, page: Page) -> None:
-    #     page.goto("https://worksheetzone.org/6588f117e0c742310abfe02f", wait_until="networkidle")
-    #     page.locator("div").filter(has_text=re.compile(r"^Share$")).click()
-    #     button_assign_popup_share = page.get_by_text(self.button_assign_popup_share, exact=True)
-    #     expect(button_assign_popup_share).to_be_disabled()
         page.goto("https://worksheetzone.org/6588f117e0c742310abfe02f", wait_until="networkidle")
         button_assign = page.get_by_text("Assign")
         expect(button_assign).to_be_hidden()
