@@ -97,9 +97,7 @@ def test_hien_thi_name_da_login(browser: Browser) -> None:
         print("phát hiện popup worksheet in progress")
         create_button.click()
     except AssertionError:
-        # Nếu không tìm thấy nút "Create New" sau 3 giây, có nghĩa là ta đang ở Luồng 1
         print("Không có popup 'Worksheet in progress'")
-        # Không cần làm gì cả, chỉ cần đi tiếp đến bước xác nhận URL
         pass
     khoi_invite_link = page.locator("div.value-invite").first
     link_join = khoi_invite_link.inner_text()

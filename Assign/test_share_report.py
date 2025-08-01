@@ -5,9 +5,9 @@ from playwright.sync_api import Page, expect, Browser
 AUTH_FILE_PATH_1 = "state_1.json"
 AUTH_FILE_PATH_PRO_1 = "state_pro_1.json"
 
+#test hien thi popup add user share
 def test_hien_thi_popup_share_assign(browser: Browser) -> None:
     print(f"1. Đang nạp trạng thái đăng nhập từ: {AUTH_FILE_PATH_PRO_1}")
-    # 4. Tạo một context mới và nạp trạng thái từ file auth.json
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1)
     except FileNotFoundError:
@@ -15,7 +15,6 @@ def test_hien_thi_popup_share_assign(browser: Browser) -> None:
         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
         assert False, f"File not found: {AUTH_FILE_PATH_PRO_1}"
         
-    # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
     page.goto("https://staging.worksheetzone.org/assign?code=4ZADI7", wait_until="load")
     page.get_by_text("Report options").click()
@@ -23,6 +22,7 @@ def test_hien_thi_popup_share_assign(browser: Browser) -> None:
     popup_share_assign = page.get_by_role("dialog").locator("div").filter(has_text="Share Assignment").nth(1)
     expect(popup_share_assign).to_be_visible()
 
+#test click button copy link 
 def test_link_copy_clipboard(browser: Browser) -> None:
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1, permissions=["clipboard-read", "clipboard-write"])
@@ -39,11 +39,13 @@ def test_link_copy_clipboard(browser: Browser) -> None:
     clipboard_content = page.evaluate("navigator.clipboard.readText()")
     assert clipboard_content == expected_link
 
+#test truy cap link share assign - chua login
 def test_paste_link_report_user_chua_login (page: Page) -> None:
     page.goto("https://worksheetzone.org/assign?code=4ZADI7&shared-report=true", wait_until="load")
     expected_url = "https://worksheetzone.org/login"
     expect(page).to_have_url(expected_url)
 
+#test truy cap link share assign - da login tk khac teacher, khac user duoc share
 def test_paste_link_report_user_login_tk_khac (browser: Browser) -> None:
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_1)
@@ -56,6 +58,7 @@ def test_paste_link_report_user_login_tk_khac (browser: Browser) -> None:
     button_request = page.get_by_text("Request Access", exact=True)
     expect(button_request).to_be_visible()
 
+#test add mail user duoc share
 def test_add_mail_user_duoc_share(browser: Browser) -> None:
     print(f"1. Đang nạp trạng thái đăng nhập từ: {AUTH_FILE_PATH_PRO_1}")
     # 4. Tạo một context mới và nạp trạng thái từ file auth.json
@@ -88,6 +91,7 @@ def test_add_mail_user_duoc_share(browser: Browser) -> None:
     row_user_invite = page.locator("div").filter(has_text=re.compile(r"^user1user1@abc-elearning\.org$")).first
     expect(row_user_invite).to_be_visible()
 
+#test truy cap link share assign - user duoc share
 def test_hien_thi_assign_user_duoc_share(browser: Browser) -> None:
     print(f"1. Đang nạp trạng thái đăng nhập từ: {AUTH_FILE_PATH_PRO_1}")
     # 4. Tạo một context mới và nạp trạng thái từ file auth.json

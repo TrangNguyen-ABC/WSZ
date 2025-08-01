@@ -33,9 +33,8 @@ def test_hien_thi_button_end_teacher_moi_tao_assign(browser: Browser) -> None:
     expect(button_end).to_be_enabled()
     
 #test hien thi button end - user duoc share
-def test_hien_thi_assign_user_duoc_share(browser: Browser) -> None:
+def test_hien_thi_button_end_user_duoc_share(browser: Browser) -> None:
     print(f"1. Đang nạp trạng thái đăng nhập từ: {AUTH_FILE_PATH_PRO_1}")
-    # 4. Tạo một context mới và nạp trạng thái từ file auth.json
     try:
         context_1 = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1, permissions=["clipboard-read", "clipboard-write"])
     except FileNotFoundError:
@@ -81,7 +80,7 @@ def test_hien_thi_assign_user_duoc_share(browser: Browser) -> None:
     expect(end_button_disable).to_be_visible()
 
 #test hien thi button end - co teacher khong duoc set quyen
-def test_hien_thi_man_co_teacher (browser: Browser) -> None:
+def test_hien_thi_button_end_man_co_teacher_khong_phan_quyen (browser: Browser) -> None:
     try:
         context_1 = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1)
     except FileNotFoundError:
@@ -123,7 +122,7 @@ def test_hien_thi_man_co_teacher (browser: Browser) -> None:
     expect(end_button_disable).to_be_visible()
 
 #Check trạng thái mặc định của button End (assign mới tạo) - co-teacher co quyen
-def test_hien_thi_man_co_teacher (browser: Browser) -> None:
+def test_hien_thi_button_end_man_co_teacher_duoc_phan_quyen (browser: Browser) -> None:
     try:
         context_1 = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1)
     except FileNotFoundError:
@@ -175,7 +174,6 @@ def test_hien_thi_button_end_qua_due_date_khong_submitlate (browser: Browser) ->
         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
         assert False, f"File not found: {AUTH_FILE_PATH_PRO_1}"
         
-    # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
     page.goto("https://staging.worksheetzone.org/assign?code=V51QKF", wait_until="load")
     end_button_disable = page.locator(".button-end-assign:has-text('End')")
@@ -197,7 +195,7 @@ def test_hien_thi_button_end_qua_due_date_co_submitlate (browser: Browser) -> No
     expect(button_end).to_be_enabled()
 
 #Check hiển thị khi click button End (enable)
-def test_hien_thi_button_end_teacher_moi_tao_assign(browser: Browser) -> None:
+def test_hien_thi_khi_click_button_end (browser: Browser) -> None:
     
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1)
@@ -206,7 +204,6 @@ def test_hien_thi_button_end_teacher_moi_tao_assign(browser: Browser) -> None:
         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
         assert False, f"File not found: {AUTH_FILE_PATH_PRO_1}"
         
-    # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
     page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
@@ -225,7 +222,7 @@ def test_hien_thi_button_end_teacher_moi_tao_assign(browser: Browser) -> None:
     expect(popup_confirm).to_be_visible()
 
 #Check hiển thị button sau khi xác nhận end 
-def test_hien_thi_button_end_teacher_moi_tao_assign(browser: Browser) -> None:
+def test_hien_thi_button_end_sau_khi_xac_nhan (browser: Browser) -> None:
     
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1)
@@ -234,7 +231,6 @@ def test_hien_thi_button_end_teacher_moi_tao_assign(browser: Browser) -> None:
         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
         assert False, f"File not found: {AUTH_FILE_PATH_PRO_1}"
         
-    # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
     page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
     page.get_by_text("Assign").click() #click button Assign

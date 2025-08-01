@@ -5,10 +5,10 @@ from playwright.sync_api import Page, expect, Browser
 AUTH_FILE_PATH_1 = "state_1.json"
 AUTH_FILE_PATH_PRO_1 = "state_pro_1.json"
 
+#test hien thi popup setting khi chua co hs join
 def test_hien_thi_setting_chua_co_hs_join(browser: Browser) -> None:
     
     print(f"1. Đang nạp trạng thái đăng nhập từ: {AUTH_FILE_PATH_1}")
-    # 4. Tạo một context mới và nạp trạng thái từ file auth.json
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_1)
     except FileNotFoundError:
@@ -47,11 +47,10 @@ def test_hien_thi_setting_chua_co_hs_join(browser: Browser) -> None:
     allow_submit_late = page.get_by_role("checkbox", name="controlled").nth(3)
     expect(allow_submit_late).to_be_enabled()
 
-############
+#test hien thi popup setting khi co hs join
 def test_hien_thi_setting_da_co_hs_join(browser: Browser) -> None:
     
     print(f"1. Đang nạp trạng thái đăng nhập từ: {AUTH_FILE_PATH_PRO_1}")
-    # 4. Tạo một context mới và nạp trạng thái từ file auth.json
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1)
     except FileNotFoundError:
@@ -68,11 +67,10 @@ def test_hien_thi_setting_da_co_hs_join(browser: Browser) -> None:
     due_date = page.get_by_role("button", name="Choose date, selected date is").nth(1)
     expect(due_date).to_be_enabled()
     
-############
+#test hien thi popup setting khi qua due date khong submit late
 def test_hien_thi_setting_assign_qua_due_date_k_submitlate(browser: Browser) -> None:
     
     print(f"1. Đang nạp trạng thái đăng nhập từ: {AUTH_FILE_PATH_PRO_1}")
-    # 4. Tạo một context mới và nạp trạng thái từ file auth.json
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_PRO_1)
     except FileNotFoundError:

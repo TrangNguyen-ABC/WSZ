@@ -5,6 +5,7 @@ from playwright.sync_api import Page, expect, Browser
 AUTH_FILE_PATH_1 = "state_1.json"
 AUTH_FILE_PATH_2 = "state_2.json"
 
+#test hien thi popup add co teacher
 def test_hien_thi_popup_co_teacher(browser: Browser) -> None:
     
     try:
@@ -33,6 +34,7 @@ def test_hien_thi_popup_co_teacher(browser: Browser) -> None:
     popup_add_co_teacher = page.get_by_role("dialog").locator("div").filter(has_text="Add Co-Teacher").nth(1)
     expect(popup_add_co_teacher).to_be_visible()
 
+#test hien thi setting mac dinh popup add co teacher
 def test_hien_thi_setting_mac_dinh_co_teacher(browser: Browser) -> None:
     
     try:
@@ -68,6 +70,7 @@ def test_hien_thi_setting_mac_dinh_co_teacher(browser: Browser) -> None:
     switch_edit_question = page.get_by_role("checkbox").nth(3)
     expect(switch_edit_question).not_to_be_checked()
 
+#test trang thai setting student submit to co teacher khi chua cos hs join
 def test_student_submit_to_co_teacher_chua_co_hs (browser: Browser) -> None:
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_1)
@@ -95,6 +98,7 @@ def test_student_submit_to_co_teacher_chua_co_hs (browser: Browser) -> None:
     switch_set_submit = page.get_by_role("checkbox")
     expect(switch_set_submit).not_to_be_checked()
 
+#test invite mail co teacher
 def test_invite_mail_co_teacher (browser: Browser) -> None:
     try:
         context = browser.new_context(storage_state=AUTH_FILE_PATH_1)
@@ -126,6 +130,7 @@ def test_invite_mail_co_teacher (browser: Browser) -> None:
     row_co_teacher = page.locator("div").filter(has_text=re.compile(r"^user2user2@abc-elearning\.org$")).first
     expect(row_co_teacher).to_be_visible()
 
+#test hien thi man co teacher duoc invite
 def test_hien_thi_man_co_teacher (browser: Browser) -> None:
     try:
         context_1 = browser.new_context(storage_state=AUTH_FILE_PATH_1)
