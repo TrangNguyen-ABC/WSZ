@@ -1,6 +1,11 @@
 import re
 import os
+from dotenv import load_dotenv
+from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
+
+load_dotenv()
+base_url = os.getenv("BASE_URL")
 
 AUTH_FILE_PATH_1 = "State/state_1.json"
 AUTH_FILE_PATH_PRO_1 = "State/state_pro_1.json"
@@ -18,7 +23,7 @@ def test_hien_thi_setting_chua_co_hs_join(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/678d198ce633858a58ac511d", wait_until="networkidle")
+    page.goto(urljoin(base_url,"678d198ce633858a58ac511d"), wait_until="networkidle")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -60,7 +65,7 @@ def test_hien_thi_setting_da_co_hs_join(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/assign?code=4ZADI7", wait_until="load")
+    page.goto(urljoin(base_url,"assign?code=4ZADI7"), wait_until="load")
     page.locator("div").filter(has_text=re.compile(r"^Settings$")).click()
     backdrop_locator = page.locator(".backdrop-wrapper")
     expect(backdrop_locator).to_be_visible()
@@ -80,7 +85,7 @@ def test_hien_thi_setting_assign_qua_due_date_k_submitlate(browser: Browser) -> 
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/assign?code=V51QKF", wait_until="load")
+    page.goto(urljoin(base_url,"assign?code=V51QKF"), wait_until="load")
     page.locator("div").filter(has_text=re.compile(r"^Settings$")).click()
     backdrop_locator = page.locator(".backdrop-wrapper")
     expect(backdrop_locator).to_be_visible()

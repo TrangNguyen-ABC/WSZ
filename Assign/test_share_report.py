@@ -1,6 +1,11 @@
 import re
 import os
+from dotenv import load_dotenv
+from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
+
+load_dotenv()
+base_url = os.getenv("BASE_URL")
 
 AUTH_FILE_PATH_1 = "State/state_1.json"
 AUTH_FILE_PATH_PRO_1 = "State/state_pro_1.json"
@@ -16,7 +21,7 @@ def test_hien_thi_popup_share_assign(browser: Browser) -> None:
         assert False, f"File not found: {AUTH_FILE_PATH_PRO_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/assign?code=4ZADI7", wait_until="load")
+    page.goto(urljoin(base_url,"assign?code=4ZADI7"), wait_until="load")
     page.get_by_text("Report options").click()
     page.locator("div").filter(has_text=re.compile(r"^Share report$")).first.click()
     popup_share_assign = page.get_by_role("dialog").locator("div").filter(has_text="Share Assignment").nth(1)
@@ -31,18 +36,18 @@ def test_link_copy_clipboard(browser: Browser) -> None:
         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
         assert False, f"File not found: {AUTH_FILE_PATH_PRO_1}"
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/assign?code=4ZADI7", wait_until="load")
+    page.goto(urljoin(base_url,"assign?code=4ZADI7"), wait_until="load")
     page.get_by_text("Report options").click()
     page.locator("div").filter(has_text=re.compile(r"^Share report$")).first.click()
     page.get_by_text("Copy link").click()
-    expected_link = "https://staging.worksheetzone.org/assign?code=4ZADI7&shared-report=true"
+    expected_link = urljoin(base_url,"assign?code=4ZADI7&shared-report=true")
     clipboard_content = page.evaluate("navigator.clipboard.readText()")
     assert clipboard_content == expected_link
 
 #test truy cap link share assign - chua login
 def test_paste_link_report_user_chua_login (page: Page) -> None:
-    page.goto("https://worksheetzone.org/assign?code=4ZADI7&shared-report=true", wait_until="load")
-    expected_url = "https://worksheetzone.org/login"
+    page.goto(urljoin(base_url,"assign?code=4ZADI7&shared-report=true"), wait_until="load")
+    expected_url = urljoin(base_url,"login")
     expect(page).to_have_url(expected_url)
 
 #test truy cap link share assign - da login tk khac teacher, khac user duoc share
@@ -54,7 +59,7 @@ def test_paste_link_report_user_login_tk_khac (browser: Browser) -> None:
         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/assign?code=4ZADI7", wait_until="load")
+    page.goto(urljoin(base_url,"assign?code=4ZADI7"), wait_until="load")
     button_request = page.get_by_text("Request Access", exact=True)
     expect(button_request).to_be_visible()
 
@@ -69,7 +74,7 @@ def test_add_mail_user_duoc_share(browser: Browser) -> None:
         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
         assert False, f"File not found: {AUTH_FILE_PATH_PRO_1}"
     page = context.new_page()    
-    page.goto("https://staging.worksheetzone.org/624a986cfb1abe3256a780ad", wait_until="load")
+    page.goto(urljoin(base_url,"624a986cfb1abe3256a780ad"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button Assign trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -88,7 +93,7 @@ def test_add_mail_user_duoc_share(browser: Browser) -> None:
     page.get_by_role("textbox", name="Add people, groups or your").fill("user1@abc-elearning.org")
     page.get_by_role("textbox", name="Add people, groups or your").press("Enter")
     page.get_by_role("button", name="Invite").click()
-    row_user_invite = page.locator("div").filter(has_text=re.compile(r"^user1user1@abc-elearning\.org$")).first
+    row_user_invite = page.locator("div").filter(has_text=re.compile(r"^user1@abc-elearning\.org$")).first
     expect(row_user_invite).to_be_visible()
 
 #test truy cap link share assign - user duoc share
@@ -102,7 +107,7 @@ def test_hien_thi_assign_user_duoc_share(browser: Browser) -> None:
         print("Vui lòng chạy script setup_auth.py để tạo file này trước.")
         assert False, f"File not found: {AUTH_FILE_PATH_PRO_1}"
     page = context_1.new_page()    
-    page.goto("https://staging.worksheetzone.org/624a986cfb1abe3256a780ad", wait_until="load")
+    page.goto(urljoin(base_url,"/624a986cfb1abe3256a780ad"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button Assign trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")

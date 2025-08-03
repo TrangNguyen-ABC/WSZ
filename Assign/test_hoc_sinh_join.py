@@ -1,23 +1,28 @@
 import re
 import os
+from dotenv import load_dotenv
+from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
+
+load_dotenv()
+base_url = os.getenv("BASE_URL")
 
 AUTH_FILE_PATH_1 = "State/state_1.json"
 
 #check cach vao man join
 def test_cach_vao_man_join(page: Page) -> None:
 
-    page.goto("https://staging.worksheetzone.org", wait_until="load")
+    page.goto(base_url, wait_until="load")
     with page.expect_popup() as page1_info:
         page.get_by_role("link", name="Enter Code").click()
     page1 = page1_info.value
-    expected_url = "https://staging.worksheetzone.org/join"
+    expected_url = base_url + "join"
     expect(page1).to_have_url(expected_url)
 
 #Input code assign không hợp lệ 
 def test_input_code_assign_khong_hop_le(page: Page) -> None:
 
-    page.goto("https://staging.worksheetzone.org/join", wait_until="load")
+    page.goto(urljoin(base_url,"join"), wait_until="load")
     page.get_by_role("textbox", name="Enter Code").click()
     page.get_by_role("textbox", name="Enter Code").fill("12345")
     page.locator(".button-submit-value").click()
@@ -27,7 +32,7 @@ def test_input_code_assign_khong_hop_le(page: Page) -> None:
 #Input code assign đang trong hạn 
 def test_input_code_assign_trong_han(page: Page) -> None:
 
-    page.goto("https://staging.worksheetzone.org/join", wait_until="load")
+    page.goto(urljoin(base_url,"join"), wait_until="load")
     page.get_by_role("textbox", name="Enter Code").click()
     page.get_by_role("textbox", name="Enter Code").fill("540910")
     page.locator(".button-submit-value").click()
@@ -37,7 +42,7 @@ def test_input_code_assign_trong_han(page: Page) -> None:
 #Input code assign chưa tới start date 
 def test_input_code_assign_chua_toi_startdate(page: Page) -> None:
 
-    page.goto("https://staging.worksheetzone.org/join", wait_until="load")
+    page.goto(urljoin(base_url,"join"), wait_until="load")
     page.get_by_role("textbox", name="Enter Code").click()
     page.get_by_role("textbox", name="Enter Code").fill("115ITL")
     page.locator(".button-submit-value").click()
@@ -47,7 +52,7 @@ def test_input_code_assign_chua_toi_startdate(page: Page) -> None:
 #Input code assign quá due date nhưng set allow submit late 
 def test_input_code_assign_qua_due_date_submitlate(page: Page) -> None:
 
-    page.goto("https://staging.worksheetzone.org/join", wait_until="load")
+    page.goto(urljoin(base_url,"join"), wait_until="load")
     page.get_by_role("textbox", name="Enter Code").click()
     page.get_by_role("textbox", name="Enter Code").fill("406578")
     page.locator(".button-submit-value").click()
@@ -57,7 +62,7 @@ def test_input_code_assign_qua_due_date_submitlate(page: Page) -> None:
 #Input code assign đã hết hạn
 def test_input_code_assign_het_han(page: Page) -> None:
 
-    page.goto("https://staging.worksheetzone.org/join", wait_until="load")
+    page.goto(urljoin(base_url,"join"), wait_until="load")
     page.get_by_role("textbox", name="Enter Code").click()
     page.get_by_role("textbox", name="Enter Code").fill("187414")
     page.locator(".button-submit-value").click()
@@ -67,7 +72,7 @@ def test_input_code_assign_het_han(page: Page) -> None:
 #check hiển thị name khi chưa login 
 def test_hien_thi_name_chua_login(page: Page) -> None:
 
-    page.goto("https://staging.worksheetzone.org/join/assign?code=540910", wait_until="load")
+    page.goto(urljoin(base_url,"join/assign?code=540910"), wait_until="load")
     input_name = page.get_by_role("textbox", name="input")
     expect(input_name).to_be_empty()
     page.get_by_text("Start", exact=True).click()
@@ -86,7 +91,7 @@ def test_hien_thi_name_da_login(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/6392ed9571041f05f65d9f5f", wait_until="load")
+    page.goto(urljoin(base_url,"6392ed9571041f05f65d9f5f"), wait_until="load")
     page.locator("div").filter(has_text=re.compile(r"^Share$")).click()
     page.get_by_text("Assign", exact=True).click()
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click()
@@ -108,7 +113,7 @@ def test_hien_thi_name_da_login(browser: Browser) -> None:
     input_name = page_1.get_by_role("textbox", name="input")
     expect(input_name).to_have_value("user1")
     page_1.get_by_text("Start", exact=True).click()
-    expected_url_pattern = re.compile(r"https://staging.worksheetzone.org/join/assign\?code=\w+&pid=\w+")
+    expected_url_pattern = re.compile(f"^{re.escape(base_url)}join/assign\\?code=\\w+&pid=\\w+")
     expect(page_1).to_have_url(expected_url_pattern)
 
 

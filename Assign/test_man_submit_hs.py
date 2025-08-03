@@ -1,6 +1,11 @@
 import re
 import os
+from dotenv import load_dotenv
+from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
+
+load_dotenv()
+base_url = os.getenv("BASE_URL")
 
 AUTH_FILE_PATH_1 = "State/state_1.json"
 
@@ -16,7 +21,7 @@ def test_man_submit_hs_khong_set_nhieu_lan_lam_bai(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/678d198ce633858a58ac511d", wait_until="networkidle")
+    page.goto(urljoin(base_url,"678d198ce633858a58ac511d"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -52,7 +57,7 @@ def test_man_submit_hs_set_nhieu_lan_lam_bai_quiz(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/678d198ce633858a58ac511d", wait_until="load")
+    page.goto(urljoin(base_url,"678d198ce633858a58ac511d"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -94,7 +99,7 @@ def test_man_submit_hs_set_nhieu_lan_lam_bai_non_quiz(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/624a9507fb1abe3256a67f34", wait_until="load")
+    page.goto(urljoin(base_url,"624a9507fb1abe3256a67f34"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -134,7 +139,7 @@ def test_hien_thi_click_button_reattempt_non_quiz(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/624a9507fb1abe3256a67f34", wait_until="load")
+    page.goto(urljoin(base_url,"624a9507fb1abe3256a67f34"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -174,7 +179,7 @@ def test_click_button_self_paced_quiz(browser: Browser) -> None:
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/678d198ce633858a58ac511d", wait_until="networkidle")
+    page.goto(urljoin(base_url,"678d198ce633858a58ac511d"), wait_until="networkidle")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -196,7 +201,7 @@ def test_click_button_self_paced_quiz(browser: Browser) -> None:
     page_1.locator("#id-overview-dialog-v2").get_by_text("Submit").click()
     page_1.locator("div").filter(has_text=re.compile(r"^Still Submit$")).first.click()
     page_1.locator("div").filter(has_text=re.compile(r"^Self-paced$")).nth(1).click()
-    expected_url = "https://staging.worksheetzone.org/learning?worksheetid=678d198ce633858a58ac511d"
+    expected_url = urljoin(base_url,"learning?worksheetid=678d198ce633858a58ac511d")
     expect(page_1).to_have_url(expected_url)
 
 #Check hiển thị khi click button Self-paced - non quiz
@@ -211,7 +216,7 @@ def test_click_button_self_paced_non_quiz(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/624a9507fb1abe3256a67f34", wait_until="networkidle")
+    page.goto(urljoin(base_url,"624a9507fb1abe3256a67f34"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -235,9 +240,8 @@ def test_click_button_self_paced_non_quiz(browser: Browser) -> None:
     submit_button.click()
     page_1.locator("div").filter(has_text=re.compile(r"^Still Submit$")).first.click()
     page_1.locator("div").filter(has_text=re.compile(r"^Self-paced$")).nth(1).click()
-    expected_url = "https://staging.worksheetzone.org/adjectives-printable-interactive-624a9507fb1abe3256a67f34#practice"
+    expected_url = urljoin(base_url,"adjectives-printable-interactive-624a9507fb1abe3256a67f34#practice")
     expect(page_1).to_have_url(expected_url)
-
 
 #Check hiển thị khi bật setting Show feedback detail after submit - quiz 
 def test_assign_show_feedback_quiz(browser: Browser) -> None:
@@ -250,7 +254,7 @@ def test_assign_show_feedback_quiz(browser: Browser) -> None:
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/678d198ce633858a58ac511d", wait_until="load")
+    page.goto(urljoin(base_url,"678d198ce633858a58ac511d"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -287,7 +291,7 @@ def test_assign_show_feedback_quiz(browser: Browser) -> None:
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/678d198ce633858a58ac511d", wait_until="load")
+    page.goto(urljoin(base_url,"678d198ce633858a58ac511d"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")

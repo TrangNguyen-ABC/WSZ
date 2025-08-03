@@ -1,6 +1,11 @@
 import re
 import os
+from dotenv import load_dotenv
+from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
+
+load_dotenv()
+base_url = os.getenv("BASE_URL")
 
 AUTH_FILE_PATH_1 = "State/state_1.json"
 AUTH_FILE_PATH_2 = "State/state_2.json"
@@ -17,7 +22,7 @@ def test_hien_thi_popup_co_teacher(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
+    page.goto(urljoin(base_url,"66068fa6b2412460610a4b10"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -46,7 +51,7 @@ def test_hien_thi_setting_mac_dinh_co_teacher(browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
+    page.goto(urljoin(base_url,"66068fa6b2412460610a4b10"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -81,7 +86,7 @@ def test_student_submit_to_co_teacher_chua_co_hs (browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
+    page.goto(urljoin(base_url,"66068fa6b2412460610a4b10"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -109,7 +114,7 @@ def test_invite_mail_co_teacher (browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
+    page.goto(urljoin(base_url,"66068fa6b2412460610a4b10"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -141,7 +146,7 @@ def test_hien_thi_man_co_teacher (browser: Browser) -> None:
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context_1.new_page()
-    page.goto("https://staging.worksheetzone.org/66068fa6b2412460610a4b10", wait_until="load")
+    page.goto(urljoin(base_url,"66068fa6b2412460610a4b10"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")

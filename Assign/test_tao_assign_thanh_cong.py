@@ -1,6 +1,11 @@
 import re
 import os
+from dotenv import load_dotenv
+from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
+
+load_dotenv()
+base_url = os.getenv("BASE_URL")
 
 AUTH_FILE_PATH_1 = "State/state_1.json"
 AUTH_FILE_PATH_2 = "State/state_2.json"
@@ -18,7 +23,7 @@ def test_create_assign_success_from_popup_share_pdf_quiz(browser: Browser) -> No
         
     # Tạo một trang mới từ context đã có trạng thái đăng nhập
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/6392ed9571041f05f65d9f5f", wait_until="load")
+    page.goto(urljoin(base_url,"6392ed9571041f05f65d9f5f"), wait_until="load")
     page.locator("div").filter(has_text=re.compile(r"^Share$")).click()
     page.get_by_text("Assign", exact=True).click()
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click()
@@ -53,7 +58,7 @@ def test_create_assign_success_from_button_assign_quiz(browser: Browser) -> None
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/678d198ce633858a58ac511d", wait_until="load")
+    page.goto(urljoin(base_url,"678d198ce633858a58ac511d"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button share trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -87,7 +92,7 @@ def test_create_assign_success_from_button_assign_non_quiz(browser: Browser) -> 
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/624a986cfb1abe3256a780ad", wait_until="load")
+    page.goto(urljoin(base_url,"624a986cfb1abe3256a780ad"), wait_until="load")
     page.get_by_text("Assign").click() #click button Assign
     page.get_by_role("dialog").locator("div").filter(has_text=re.compile(r"^Assign$")).click() #click button Assign trên popup setting
     print("Đang kiểm tra xem có popup 'Worksheet in progress' không...")
@@ -121,7 +126,7 @@ def test_create_assign_success_from_landing_teaching_quiz(browser: Browser) -> N
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/678d198ce633858a58ac511d", wait_until="load")
+    page.goto(urljoin(base_url,"678d198ce633858a58ac511d"), wait_until="load")
     page.locator("div").filter(has_text=re.compile(r"^Start Teaching Activities$")).nth(1).click() #click button Start teaching
     page.locator("#select-game-screen").get_by_text("Assign Homework").click() #select activity assign
     page.get_by_text("Start", exact=True).click() #click button Start bên khối info phải
@@ -156,7 +161,7 @@ def test_create_assign_success_from_landing_teaching_non_quiz(browser: Browser) 
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/624a986cfb1abe3256a780ad", wait_until="networkidle")
+    page.goto(urljoin(base_url,"624a986cfb1abe3256a780ad"), wait_until="networkidle")
     page.locator("div").filter(has_text=re.compile(r"^Start Teaching Activities$")).nth(1).click() #click button Start teaching
     page.locator("#select-game-screen").get_by_text("Assign Homework").click() #select activity assign
     page.get_by_text("Start", exact=True).click() #click button Start bên khối info phải
@@ -191,7 +196,7 @@ def test_create_assign_success_from_tool(browser: Browser) -> None:
         assert False, f"File not found: {AUTH_FILE_PATH_1}"
         
     page = context.new_page()
-    page.goto("https://staging.worksheetzone.org/addition-worksheet-generator-create")
+    page.goto(urljoin(base_url,"addition-worksheet-generator-create"), wait_until="networkidle")
     page.get_by_text("Save").click()
     page.get_by_role("textbox", name="Enter title here...").click()
     page.get_by_role("textbox", name="Enter title here...").fill("1")
