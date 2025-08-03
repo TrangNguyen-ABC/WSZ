@@ -2,8 +2,8 @@ import re
 import os
 from playwright.sync_api import Page, expect, Browser
 
-AUTH_FILE_PATH_1 = "state_1.json"
-AUTH_FILE_PATH_2 = "state_2.json"
+AUTH_FILE_PATH_1 = "State/state_1.json"
+AUTH_FILE_PATH_2 = "State/state_2.json"
 
 #Check assign từ popup share - pdf + Quiz
 def test_create_assign_success_from_popup_share_pdf_quiz(browser: Browser) -> None:

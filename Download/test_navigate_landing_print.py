@@ -1,10 +1,18 @@
 import re
 import os
+from dotenv import load_dotenv
+from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
 
+# Tải các biến môi trường từ file .env vào chương trình
+load_dotenv()
+# Lấy giá trị của biến BASE_URL từ môi trường
+# Nếu không tìm thấy, giá trị sẽ là None
+base_url = os.getenv("BASE_URL")
+
 # 2. Định nghĩa đường dẫn đến file state và thư mục download
-AUTH_FILE_PATH_1 = "state_pro_1.json"
-AUTH_FILE_PATH_2 = "state_pro_2.json"
+AUTH_FILE_PATH_1 = "State/state_pro_1.json"
+AUTH_FILE_PATH_2 = "State/state_pro_2.json"
 DOWNLOAD_DIR = "Download/downloaded_pro"
 # -----------------
 def test_navigate_landing_quiz(browser: Browser) -> None:
@@ -29,14 +37,14 @@ def test_navigate_landing_quiz(browser: Browser) -> None:
     # Tạo thư mục download nếu nó chưa tồn tại
     os.makedirs(DOWNLOAD_DIR, exist_ok=True)
     # Đi đến trang có file cần tải
-    page.goto("https://worksheetzone.org/good-or-bad-choices--6646cb7bd37ce56585f87734?pdfId=6589048ce0c742310ac00797", wait_until="networkidle")
+    page.goto(urljoin(base_url,"good-or-bad-choices--6646cb7bd37ce56585f87734?pdfId=6589048ce0c742310ac00797"), wait_until="load")
     
     page.locator("div").filter(has_text=re.compile(r"^Download$")).nth(4).click()
     with page.expect_download() as download2_info:
         page.locator("div").filter(has_text=re.compile(r"^Worksheet$")).click()
     # download2 = download2_info.value
     page.get_by_role("link", name="Switch question formats").click()
-    expect(page).to_have_url("https://worksheetzone.org/print?worksheetId=6646cb7bd37ce56585f87734")
+    expect(page).to_have_url(urljoin(base_url,"print?worksheetId=6646cb7bd37ce56585f87734"))
     page.wait_for_timeout(3000)
 
     context.close()
@@ -63,14 +71,14 @@ def test_navigate_landing_PDF(browser: Browser) -> None:
     # Tạo thư mục download nếu nó chưa tồn tại
     os.makedirs(DOWNLOAD_DIR, exist_ok=True)
     # Đi đến trang có file cần tải
-    page.goto("https://worksheetzone.org/practice-handwriting-online?worksheetId=6588f117e0c742310abfe02f", wait_until="networkidle")
+    page.goto(urljoin(base_url,"practice-handwriting-online?worksheetId=6588f117e0c742310abfe02f"), wait_until="load")
     
     page.locator("div").filter(has_text=re.compile(r"^Download$")).nth(4).click()
     with page.expect_download() as download2_info:
         page.locator("div").filter(has_text=re.compile(r"^Worksheet$")).click()
     # download2 = download2_info.value
     page.get_by_role("link", name="Switch question formats").click()
-    expect(page).to_have_url("https://worksheetzone.org/print?worksheetId=6646cb7bd37ce56585f87734")
+    expect(page).to_have_url(urljoin(base_url,"print?worksheetId=6646cb7bd37ce56585f87734"))
     page.wait_for_timeout(3000)
 
     context.close()

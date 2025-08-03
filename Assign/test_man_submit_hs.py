@@ -2,7 +2,7 @@ import re
 import os
 from playwright.sync_api import Page, expect, Browser
 
-AUTH_FILE_PATH_1 = "state_1.json"
+AUTH_FILE_PATH_1 = "State/state_1.json"
 
 #assign không set nhiều lần làm bài
 def test_man_submit_hs_khong_set_nhieu_lan_lam_bai(browser: Browser) -> None:

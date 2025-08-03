@@ -2,8 +2,8 @@ import re
 import os
 from playwright.sync_api import Page, expect, Browser
 
-AUTH_FILE_PATH_PRO_1 = "state_pro_1.json"
-AUTH_FILE_PATH_PRO_2 = "state_pro_2.json"
+AUTH_FILE_PATH_PRO_1 = "State/state_pro_1.json"
+AUTH_FILE_PATH_PRO_2 = "State/state_pro_2.json"
 
 #test hien thi button end trong assign moi tao setting mac dinh - teacher
 def test_hien_thi_button_end_teacher_moi_tao_assign(browser: Browser) -> None:

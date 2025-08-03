@@ -2,7 +2,7 @@ import re
 import os
 from playwright.sync_api import Page, expect, Browser
 
-AUTH_FILE_PATH_1 = "state_1.json"
+AUTH_FILE_PATH_1 = "State/state_1.json"
 
 #check cach vao man join
 def test_cach_vao_man_join(page: Page) -> None:

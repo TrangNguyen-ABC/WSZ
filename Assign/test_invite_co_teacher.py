@@ -2,8 +2,8 @@ import re
 import os
 from playwright.sync_api import Page, expect, Browser
 
-AUTH_FILE_PATH_1 = "state_1.json"
-AUTH_FILE_PATH_2 = "state_2.json"
+AUTH_FILE_PATH_1 = "State/state_1.json"
+AUTH_FILE_PATH_2 = "State/state_2.json"
 
 #test hien thi popup add co teacher
 def test_hien_thi_popup_co_teacher(browser: Browser) -> None:

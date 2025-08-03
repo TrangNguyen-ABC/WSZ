@@ -2,8 +2,8 @@ import re
 import os
 from playwright.sync_api import Page, expect, Browser
 
-AUTH_FILE_PATH_1 = "state_1.json"
-AUTH_FILE_PATH_PRO_1 = "state_pro_1.json"
+AUTH_FILE_PATH_1 = "State/state_1.json"
+AUTH_FILE_PATH_PRO_1 = "State/state_pro_1.json"
 
 #test hien thi popup setting khi chua co hs join
 def test_hien_thi_setting_chua_co_hs_join(browser: Browser) -> None:

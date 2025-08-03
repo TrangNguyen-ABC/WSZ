@@ -2,8 +2,8 @@ import re
 import os
 from playwright.sync_api import Page, expect, Browser
 
-AUTH_FILE_PATH_1 = "state_1.json"
-AUTH_FILE_PATH_PRO_1 = "state_pro_1.json"
+AUTH_FILE_PATH_1 = "State/state_1.json"
+AUTH_FILE_PATH_PRO_1 = "State/state_pro_1.json"
 
 #test hien thi popup add user share
 def test_hien_thi_popup_share_assign(browser: Browser) -> None:
