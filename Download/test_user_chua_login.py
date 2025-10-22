@@ -35,7 +35,7 @@ class TestDownloadChuaLogin:
         popup_login = page.locator(self.popup_login_selector)
         expect(popup_login).to_be_visible()
 
-    def test_preview_PDF(self, page: Page) -> None:
+    def test_download_from_preview_PDF(self, page: Page) -> None:
         page.goto(urljoin(base_url, "worksheets"), wait_until="load")
         page.locator("div").filter(has_text=re.compile(r"^All$")).click() #open dropdown type
         page.locator("[id=\"browsing\\.nonInteractive\"]").click() #select option non interactive
@@ -44,28 +44,28 @@ class TestDownloadChuaLogin:
         popup_login = page.locator(self.popup_login_selector)
         expect(popup_login).to_be_visible()
 
-    def test_preview_interactive(self, page: Page) -> None:
+    def test_download_from_preview_interactive(self, page: Page) -> None:
         page.goto(urljoin(base_url, "worksheets"), wait_until="load")
         page.get_by_role("link", name="Discover Similar 2 pages The").click()
         page.locator("#information-worksheet-top div").filter(has_text="Download").nth(4).click()
         popup_login = page.locator(self.popup_login_selector)
         expect(popup_login).to_be_visible()
 
-    def test_detail_interactive(self, page: Page) -> None:
+    def test_download_from_detail_PDF(self, page: Page) -> None:
+        page.goto(urljoin(base_url,"6588f117e0c742310abfe02f"), wait_until="load")
+        page.locator("div").filter(has_text=re.compile(r"^Download$")).nth(2).click()
+        popup_login = page.locator(self.popup_login_selector)
+        expect(popup_login).to_be_visible()
+
+    def test_download_from_detail_interactive(self, page: Page) -> None:
         page.goto(urljoin(base_url,"624a986cfb1abe3256a780ad"), wait_until="load")
         page.locator("div").filter(has_text=re.compile(r"^Download$")).nth(4).click()
         page.locator("div").filter(has_text=re.compile(r"^Worksheet$")).click()
         popup_login = page.locator(self.popup_login_selector)
         expect(popup_login).to_be_visible()
 
-    def test_detail_PDF(self, page: Page) -> None:
-        page.goto(urljoin(base_url,"6588f117e0c742310abfe02f"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Download$")).nth(2).click()
-        popup_login = page.locator(self.popup_login_selector)
-        expect(popup_login).to_be_visible()
-
     def test_download_self_paced_PDF(self, page: Page) -> None:
-        page.goto(urljoin(base_url,"6588f117e0c742310abfe02f"), wait_until="load")
+        page.goto(urljoin(base_url,"practice-handwriting-online?worksheetId=6588f117e0c742310abfe02f"), wait_until="load")
         page.locator("#download-btn").get_by_role("img").click()
         popup_login = page.locator(self.popup_login_selector)
         expect(popup_login).to_be_visible()

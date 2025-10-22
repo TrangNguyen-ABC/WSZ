@@ -17,7 +17,7 @@ AUTH_FILE_PATH_2 = "State/state_pro_2.json"
 DOWNLOAD_DIR = "Download/downloaded_pro"
 # -----------------
 @pytest.mark.parametrize("run_number", [1, 2])
-def test_download_file_1_author_wsz(browser: Browser, run_number: int) -> None:
+def test_download_file_author_wsz(browser: Browser, run_number: int) -> None:
     """
     Test này kiểm tra chức năng download file đầu tiên, thứ 2 trong ngày với author là wsz
     """
@@ -71,7 +71,7 @@ def test_download_file_1_author_wsz(browser: Browser, run_number: int) -> None:
     # ----------------
 
 @pytest.mark.parametrize("run_number", [1, 2])
-def test_download_file_1_author_not_wsz(browser: Browser, run_number: int) -> None:
+def test_download_file_author_not_wsz(browser: Browser, run_number: int) -> None:
     """
     Test này kiểm tra chức năng download file đầu tiên, thứ 2 trong ngày với author k phải là wsz
     """
