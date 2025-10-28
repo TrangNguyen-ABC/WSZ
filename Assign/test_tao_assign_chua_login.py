@@ -8,7 +8,8 @@ load_dotenv()
 base_url = os.getenv("BASE_URL")
 
 class TestAssignChuaLogin:
-    popup_login_selector = ".main-login-container"
+    # popup_login_selector = ".main-login-container"
+    popup_login_selector = ".popup-common-container"
 
     def test_click_assign_popup_share(self, page: Page) -> None:
         page.goto(urljoin(base_url,"6589048ce0c742310ac00797"))

@@ -10,7 +10,7 @@ load_dotenv()
 # Nếu không tìm thấy, giá trị sẽ là None
 base_url = os.getenv("BASE_URL")
 
-class JoinSelfPacedPage:
+class TestJoinSelfPacedPage:
         
     def test_join_self_paced_pdf_quiz(self, page: Page) -> None:
         page.goto(urljoin(base_url, "65091415efe5de572294162e"), wait_until="load")
@@ -28,5 +28,5 @@ class JoinSelfPacedPage:
     def test_join_self_paced_quiz_btn_view_as_student(self, page: Page) -> None:
         page.goto(urljoin(base_url, "660a2dcfb241246061113681"), wait_until="load")
         page.get_by_text("View as a student").click()
-        expect(page).to_have_url(urljoin(base_url,"#practice"))
+        expect(page).to_have_url(urljoin(base_url,"reading-comprehension-milles-hair-style-quiz-worksheets-printable-interactive-660a2dcfb241246061113681#practice"))
         page.wait_for_timeout(3000)
