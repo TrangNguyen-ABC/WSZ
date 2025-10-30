@@ -4,10 +4,8 @@ from dotenv import load_dotenv
 from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
 
-# Tải các biến môi trường từ file .env vào chương trình
 load_dotenv()
-# Lấy giá trị của biến BASE_URL từ môi trường
-# Nếu không tìm thấy, giá trị sẽ là None
+
 base_url = os.getenv("BASE_URL")
 
 class TestJoinSelfPacedPage:
