@@ -4,45 +4,42 @@ from dotenv import load_dotenv
 from urllib.parse import urljoin
 from playwright.sync_api import Page, expect, Browser
 
-# Tải các biến môi trường từ file .env vào chương trình
 load_dotenv()
-# Lấy giá trị của biến BASE_URL từ môi trường
-# Nếu không tìm thấy, giá trị sẽ là None
 base_url = os.getenv("BASE_URL")
 
-# class TestCheckSettingsQuestions:
-    # def test_hien_thi_so_cau_hoi_mac_dinh(self, page: Page) -> None:
-    #     page.goto(urljoin(base_url, "665597a9b30a26001cc2430b"), wait_until="load")
-    #     page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
-    #     #lấy value trong ô input Questions
+class TestCheckSettingsQuestions:
+    def test_hien_thi_so_cau_hoi_mac_dinh(self, page: Page) -> None:
+        page.goto(urljoin(base_url, "665597a9b30a26001cc2430b"), wait_until="load")
+        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        #lấy value trong ô input Questions
 
-    #     input_selector = "input.input-value.input-text"
-    #     input_element = page.locator(input_selector)
-    #     value_str = input_element.input_value()
-    #     print(f"Giá trị trong ô input (value_str): {value_str}") # Để debug
+        input_selector = "input.input-value.input-text"
+        input_element = page.locator(input_selector)
+        value_str = input_element.input_value()
+        print(f"Giá trị trong ô input (value_str): {value_str}") # Để debug
         
-        # # So sánh value_str với 19
-        # expected_value = 19
+        # So sánh value_str với 19
+        expected_value = 19
 
-        # try:
-        #     actual_value_int = int(value_str) # Chuyển đổi chuỗi thành số nguyên
-        #     print(f"Giá trị trong ô input sau khi chuyển đổi (actual_value_int): {actual_value_int}")
-        #     expect(input_element).to_have_value(str(expected_value)) # expect.to_have_value() mong đợi một chuỗi
+        try:
+            actual_value_int = int(value_str) # Chuyển đổi chuỗi thành số nguyên
+            print(f"Giá trị trong ô input sau khi chuyển đổi (actual_value_int): {actual_value_int}")
+            expect(input_element).to_have_value(str(expected_value)) # expect.to_have_value() mong đợi một chuỗi
 
-        # except ValueError:
-        #     print(f"Lỗi: Không thể chuyển đổi '{value_str}' thành số nguyên.")
-        #     assert False, f"Giá trị input '{value_str}' không phải là số hợp lệ."
+        except ValueError:
+            print(f"Lỗi: Không thể chuyển đổi '{value_str}' thành số nguyên.")
+            assert False, f"Giá trị input '{value_str}' không phải là số hợp lệ."
 
 
-# class TestCheckSettingsTimer:
-#     def test_hien_thi_mac_dinh_timer(self, page: Page) -> None:
-#         page.goto(urljoin(base_url, "665597a9b30a26001cc2430b"), wait_until="load")
-#         page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
-#         text_container_selector = "div.input-value.input-text"
-#         text_element = page.locator(text_container_selector)
-#         text_content = text_element.text_content()
+class TestCheckSettingsTimer:
+    def test_hien_thi_mac_dinh_timer(self, page: Page) -> None:
+        page.goto(urljoin(base_url, "665597a9b30a26001cc2430b"), wait_until="load")
+        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        text_container_selector = "div.input-value.input-text"
+        text_element = page.locator(text_container_selector)
+        text_content = text_element.text_content()
 
-#         print(f"Nội dung text trong phần tử là: '{text_content}'")
+        print(f"Nội dung text trong phần tử là: '{text_content}'")
 class TestCheckConvertQuestions:
     def test_hien_thi_mac_dinh_tuy_chon(self, page: Page) -> None:
         page.goto(urljoin(base_url, "665597a9b30a26001cc2430b"), wait_until="load")
