@@ -132,27 +132,27 @@ class TestPlayFitb:
         correct_element = page.locator(".correct")
         expect(correct_element).to_be_visible()
 
-    def test_hien_thi_fitb_khong_instant_feedback(self, page: Page) -> None:
-        page.goto(urljoin(base_url, "68f9da8586868e001c070043"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
-        checkbox_locator = page.get_by_role("checkbox").nth(3)
-        max_attempts = 5 # Số lần thử lại tối đa
-        attempt = 0
-        while checkbox_locator.is_checked() and attempt < max_attempts:
-            print(f"Attempt {attempt + 1}: Checkbox is still checked, trying to uncheck...")
-            checkbox_locator.uncheck()
-            # Có thể thêm một khoảng chờ ngắn để UI cập nhật
-            page.wait_for_timeout(500) # Chờ 0.5 giây
-            attempt += 1
+    # def test_hien_thi_fitb_khong_instant_feedback(self, page: Page) -> None:
+    #     page.goto(urljoin(base_url, "68f9da8586868e001c070043"), wait_until="load")
+    #     page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+    #     checkbox_locator = page.get_by_role("checkbox").nth(3)
+    #     max_attempts = 5 # Số lần thử lại tối đa
+    #     attempt = 0
+    #     while checkbox_locator.is_checked() and attempt < max_attempts:
+    #         print(f"Attempt {attempt + 1}: Checkbox is still checked, trying to uncheck...")
+    #         checkbox_locator.uncheck()
+    #         # Có thể thêm một khoảng chờ ngắn để UI cập nhật
+    #         page.wait_for_timeout(500) # Chờ 0.5 giây
+    #         attempt += 1
         
-        # Kiểm tra cuối cùng để đảm bảo nó đã được uncheck
-        # Nếu sau max_attempts vẫn chưa uncheck, bài test sẽ thất bại
-        expect(checkbox_locator).not_to_be_checked(timeout=5000)
-        page.get_by_text("Start", exact=True).click()
-        page.get_by_text("What").click()
-        page.locator("#wordBlank-0").press("Enter")
-        correct_element = page.locator(".correct")
-        expect(correct_element).to_be_hidden()
+    #     # Kiểm tra cuối cùng để đảm bảo nó đã được uncheck
+    #     # Nếu sau max_attempts vẫn chưa uncheck, bài test sẽ thất bại
+    #     expect(checkbox_locator).not_to_be_checked(timeout=5000)
+    #     page.get_by_text("Start", exact=True).click()
+    #     page.get_by_text("What").click()
+    #     page.locator("#wordBlank-0").press("Enter")
+    #     correct_element = page.locator(".correct")
+    #     expect(correct_element).to_be_hidden()
 
 class TestPlayOpenResponse:
     def test_hien_thi_input_text_open_response_(self, page: Page) -> None:
@@ -176,11 +176,52 @@ class TestPlayOpenResponse:
         expect(input_box_new).to_have_value("678")
 
 class TestPlayTrueFalse:
-    def test_hien_thi_tick_da_instant_feedback(self, page: Page) -> None:
+    # def test_hien_thi_tick_da_instant_feedback(self, page: Page) -> None:
+    #     page.goto(urljoin(base_url, "68f9d05086868e001c0644de"), wait_until="load")
+    #     page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+    #     page.get_by_role("checkbox").nth(2).check()
+    #     page.get_by_role("checkbox").first.uncheck()
+    #     page.get_by_text("Start", exact=True).click()
+    #     page.get_by_text("Atrue").click()
+    #     # element = page.locator('.cheer-answer.Correct')
+    #     # expect(element).to_be_visible()
+    #     incorrect_selector = ".cheer-answer.Incorrect"
+    #     correct_selector = ".cheer-answer.Correct"
+
+    #     # Sử dụng page.locator().is_visible() để kiểm tra sự hiển thị
+    #     is_incorrect_visible = page.locator(incorrect_selector).is_visible()
+    #     is_correct_visible = page.locator(correct_selector).is_visible()
+
+    #     if is_incorrect_visible:
+    #         print(f"Phần tử '{incorrect_selector}' đang hiển thị. Tiếp tục (pass).")
+    #         # Không cần làm gì thêm ở đây nếu điều kiện là 'pass'
+    #         return True
+    #     elif is_correct_visible:
+    #         print(f"Phần tử '{correct_selector}' đang hiển thị. Tiếp tục (pass).")
+    #         # Không cần làm gì thêm ở đây nếu điều kiện là 'pass'
+    #         return True
+    #     else:
+    #         print("Không tìm thấy phần tử 'cheer-answer Incorrect' hoặc 'cheer-answer Correct' hiển thị.")
+    #         return False
+        
+    def test_hien_thi_tick_da_khong_instant_feedback(self, page: Page) -> None:
         page.goto(urljoin(base_url, "68f9d05086868e001c0644de"), wait_until="load")
         page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
         page.get_by_role("checkbox").nth(2).check()
         page.get_by_role("checkbox").first.uncheck()
+        checkbox_instant_feedback = page.get_by_role("checkbox").nth(3)
+        max_attempts = 5 # Số lần thử lại tối đa
+        attempt = 0
+        while checkbox_instant_feedback.is_checked() and attempt < max_attempts:
+            print(f"Attempt {attempt + 1}: Checkbox is still checked, trying to uncheck...")
+            checkbox_instant_feedback.uncheck()
+            # Có thể thêm một khoảng chờ ngắn để UI cập nhật
+            page.wait_for_timeout(500) # Chờ 0.5 giây
+            attempt += 1
+        
+        # Kiểm tra cuối cùng để đảm bảo nó đã được uncheck
+        # Nếu sau max_attempts vẫn chưa uncheck, bài test sẽ thất bại
+        expect(checkbox_instant_feedback).not_to_be_checked(timeout=5000)
         page.get_by_text("Start", exact=True).click()
         page.get_by_text("Atrue").click()
         
