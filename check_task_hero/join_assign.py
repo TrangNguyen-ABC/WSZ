@@ -6,13 +6,8 @@ def run(playwright: Playwright) -> None:
     browser = playwright.chromium.launch(headless=False)
     
     # Chạy vòng lặp từ 1 đến 5
-<<<<<<< HEAD
-    for i in range(1, 5):
-=======
     for i in range(45, 52):
->>>>>>> b4fbc27 (check task hero)
         print(f"Đang thực hiện lần chạy thứ: {i}")
-        
         # Tạo context và page mới cho mỗi lần chạy để đảm bảo dữ liệu sạch
         context = browser.new_context()
         page = context.new_page()
