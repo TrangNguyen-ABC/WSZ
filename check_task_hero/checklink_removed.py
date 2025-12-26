@@ -66,7 +66,7 @@ def check_worksheet_links(input_file, output_file):
 
 # --- CẤU HÌNH ---
 # Tên file Excel đầu vào của bạn 
-input_excel_name = 'Book2.xlsx' 
+input_excel_name = 'Remove_link.xlsx' 
 # Tên file kết quả đầu ra 
 output_excel_name = 'ket_qua_kiem_tra.xlsx'
 
