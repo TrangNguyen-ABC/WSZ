@@ -6,13 +6,13 @@ def run(playwright: Playwright) -> None:
     browser = playwright.chromium.launch(headless=False)
     
     # Chạy vòng lặp từ 1 đến 5
-    for i in range(45, 52):
+    for i in range(1, 13):
         print(f"Đang thực hiện lần chạy thứ: {i}")
         # Tạo context và page mới cho mỗi lần chạy để đảm bảo dữ liệu sạch
         context = browser.new_context()
         page = context.new_page()
         
-        page.goto("https://worksheetzone.org/join/assign?code=G2D423&utm_source=link")
+        page.goto("https://staging.worksheetzone.org/join/assign?code=3P1RS5&utm_source=link")
         
         # # Nhập Code
         # page.get_by_role("textbox", name="Enter Code").click()

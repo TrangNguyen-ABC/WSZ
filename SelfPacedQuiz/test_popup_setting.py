@@ -10,7 +10,7 @@ base_url = os.getenv("BASE_URL")
 class TestCheckSettingsQuestions:
     def test_hien_thi_so_cau_hoi_mac_dinh(self, page: Page) -> None:
         page.goto(urljoin(base_url, "665597a9b30a26001cc2430b"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         #lấy value trong ô input Questions
 
         input_selector = "input.input-value.input-text"
@@ -34,7 +34,7 @@ class TestCheckSettingsQuestions:
 class TestCheckSettingsTimer:
     def test_hien_thi_mac_dinh_timer(self, page: Page) -> None:
         page.goto(urljoin(base_url, "665597a9b30a26001cc2430b"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         text_container_selector = "div.input-value.input-text"
         text_element = page.locator(text_container_selector)
         text_content = text_element.text_content()
@@ -43,7 +43,7 @@ class TestCheckSettingsTimer:
 class TestCheckConvertQuestions:
     def test_hien_thi_mac_dinh_tuy_chon(self, page: Page) -> None:
         page.goto(urljoin(base_url, "665597a9b30a26001cc2430b"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         multiple_choice = page.get_by_role("checkbox").first
         matching = page.get_by_role("checkbox").nth(1)
         true_false = page.get_by_role("checkbox").nth(2)
@@ -53,7 +53,7 @@ class TestCheckConvertQuestions:
     
     def test_hien_thi_quiz_multiple_choice(self, page: Page) -> None:
         page.goto(urljoin(base_url, "68f9cd8d86868e001c063c5c"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         multiple_choice = page.get_by_role("checkbox").first
         matching = page.get_by_role("checkbox").nth(1)
         true_false = page.get_by_role("checkbox").nth(2)
@@ -63,7 +63,7 @@ class TestCheckConvertQuestions:
 
     def test_hien_thi_quiz_1_multiple_choice(self, page: Page) -> None:
         page.goto(urljoin(base_url, "690077b9228086001c7b6f06"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         multiple_choice = page.get_by_role("checkbox").first
         matching = page.get_by_role("checkbox").nth(1)
         true_false = page.get_by_role("checkbox").nth(2)
@@ -73,7 +73,7 @@ class TestCheckConvertQuestions:
     
     def test_hien_thi_quiz_open_response(self, page: Page) -> None:
         page.goto(urljoin(base_url, "68f9dd5b86868e001c070e35"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         multiple_choice = page.get_by_role("checkbox").first
         matching = page.get_by_role("checkbox").nth(1)
         true_false = page.get_by_role("checkbox").nth(2)
@@ -83,7 +83,7 @@ class TestCheckConvertQuestions:
 
     def test_hien_thi_quiz_fill_in_the_blank(self, page: Page) -> None:
         page.goto(urljoin(base_url, "68f9da8586868e001c070043"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         multiple_choice = page.get_by_role("checkbox").first
         matching = page.get_by_role("checkbox").nth(1)
         true_false = page.get_by_role("checkbox").nth(2)
@@ -94,24 +94,24 @@ class TestCheckConvertQuestions:
 class TestCheckInstantFeedback:
     def test_hien_thi_mac_dinh_quiz_multiple_choice(self, page: Page) -> None:
         page.goto(urljoin(base_url, "68f9cd8d86868e001c063c5c"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         instant_feedback = page.get_by_role("checkbox").nth(3)
         expect(instant_feedback).to_be_checked()
 
     def test_hien_thi_mac_dinh_quiz_open_response(self, page: Page) -> None:
         page.goto(urljoin(base_url, "68f9dd5b86868e001c070e35"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         instant_feedback = page.get_by_role("checkbox").nth(3)
         expect(instant_feedback).to_be_disabled()
 
     def test_hien_thi_mac_dinh_quiz_fill_in_the_blank(self, page: Page) -> None:
         page.goto(urljoin(base_url, "68f9da8586868e001c070043"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         instant_feedback = page.get_by_role("checkbox").nth(3)
         expect(instant_feedback).to_be_checked()
 
     def test_hien_thi_mac_dinh_quiz_3_dang_cau(self, page: Page) -> None:
         page.goto(urljoin(base_url, "69008158228086001c7b924e"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         instant_feedback = page.get_by_role("checkbox").nth(3)
         expect(instant_feedback).to_be_checked()

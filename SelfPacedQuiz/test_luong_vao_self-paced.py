@@ -12,14 +12,14 @@ class TestJoinSelfPacedPage:
         
     def test_join_self_paced_pdf_quiz(self, page: Page) -> None:
         page.goto(urljoin(base_url, "65091415efe5de572294162e"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Play As A Quiz$")).nth(1).click()
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Teach this online$")).nth(2).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         expect(page).to_have_url(urljoin(base_url,"learning?worksheetid=6655a5f88b106c1a25c99949"))
         page.wait_for_timeout(3000)
     
     def test_join_self_paced_quiz_btn_self_paced(self, page: Page) -> None:
         page.goto(urljoin(base_url, "660a2dcfb241246061113681"), wait_until="load")
-        page.locator("div").filter(has_text=re.compile(r"^Self-paced learning$")).nth(1).click()
+        page.locator("div").filter(has_text=re.compile(r"^Self-test$")).nth(1).click()
         expect(page).to_have_url(urljoin(base_url,"learning?worksheetid=660a2dcfb241246061113681"))
         page.wait_for_timeout(3000)
 
